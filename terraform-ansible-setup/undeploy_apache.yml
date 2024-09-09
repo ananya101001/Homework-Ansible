@@ -1,0 +1,26 @@
+- name: Undeploy Apache server
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Stop Apache service
+      service:
+        name: apache2
+        state: stopped
+
+    - name: Disable Apache service
+      systemd:
+        name: apache2
+        enabled: no
+
+    - name: Remove Apache package
+      apt:
+        name: apache2
+        state: absent
+
+    
+
+    - name: Remove Apache web content directory
+      file:
+        path: /var/www/html
+        state: absent
+        
